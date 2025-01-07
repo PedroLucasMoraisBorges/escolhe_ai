@@ -1,0 +1,106 @@
+/* FILTROS */
+
+.filters h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.fields {
+    display: flex;
+    align-items: end;
+}
+
+.fields div {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+
+.fields label {
+    margin-bottom: .2rem;
+}
+
+.fields select {
+    padding: .3rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.fields button {
+    padding: 1rem 2rem;
+    border: 0;
+    border-radius: 10px;
+    background-color: #DAB600;
+    color: white;
+    font-weight: bold;
+    height: 50%;
+    margin-left: 2rem;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.fields button:hover {
+    transform: scale(1.1);
+}
+
+/* FILTROS */
+
+
+
+/* SORTED MOVIE DIV */
+
+.sortedMovie {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#animationSteps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#movieReveal {
+    animation: fadeIn 1s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+/* SORTED MOVIE DIV */
+
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .filters .fields {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        justify-content: start;
+    }
+
+    .fields button{
+        margin: 0;
+        height: auto;
+        padding: .5rem 1rem;
+        margin-top: 1rem;
+    }
+}

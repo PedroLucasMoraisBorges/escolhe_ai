@@ -1,0 +1,411 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}
+Cadastrar Filmes
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/select2.min.css' %}">
+
+<style>
+    /* Spinner para a animação de carregamento */
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        /* Garantindo que ocupe toda a largura do container */
+        height: 100%;
+        /* Garantindo que ocupe toda a altura do container */
+    }
+
+    .loading::after {
+        content: "";
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #DAB600;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    main {
+        padding: 3rem 2rem;
+        color: #000000DE;
+        background-color: white;
+        width: 35%;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: normal;
+        border-left: 5px solid rgb(245, 197, 24);
+        padding: 0 0 0 .5rem;
+        margin-bottom: .3rem;
+    }
+
+    h2 {
+        margin-bottom: .3rem;
+        font-size: 1.75rem;
+    }
+
+    .sub_title {
+        color: #0000008A;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .principal_form {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background-color: white;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .principal_form label {
+        margin-bottom: .3rem;
+    }
+
+    .principal_form input,
+    select,
+    textarea {
+        width: 100%;
+        padding: .3rem;
+        margin-bottom: 1rem;
+        box-sizing: border-box;
+        resize: none;
+    }
+
+    .select2-container {
+        margin-bottom: .8rem;
+    }
+
+    .button_saga {
+        cursor: pointer;
+        color: #DAB600;
+        font-weight: bold;
+    }
+
+    section {
+        width: 100%;
+    }
+
+    label {
+        display: block;
+    }
+
+    #label_img {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        background-color: rgb(202, 202, 202);
+        padding: .3rem;
+        border-radius: 5px;
+    }
+
+    #label_img img {
+        width: 30px;
+        margin-bottom: .3rem;
+    }
+
+    #id_img {
+        display: none;
+    }
+
+    .none {
+        display: none !important;
+    }
+
+    .principal_form button {
+        background-color: #DAB600;
+        color: white;
+        padding: .3rem .5rem;
+        border: 0;
+        margin-top: 1rem;
+        width: 100%;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .principal_form button:hover {
+        background-color: #C49A00;
+        scale: 1.04;
+    }
+
+    #preview-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .imgDiv label {
+        text-align: center;
+        margin-right: 1rem;
+    }
+
+    .inputDiv label p {
+        margin-bottom: .3rem;
+    }
+
+    .sagaForm {
+        border-top: 1px solid rgba(0, 0, 0, 0.529);
+        padding-top: 1rem;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        margin-top: 1rem;
+    }
+
+
+    .sagaForm input {
+        padding: .3rem;
+        margin-bottom: 1rem;
+        box-sizing: border-box;
+    }
+
+    .sagaForm button {
+        background-color: #DAB600;
+        color: white;
+        padding: .2rem .5rem;
+        border: 0;
+        width: 100px;
+        margin-left: .4rem;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .sagaForm button:hover {
+        background-color: #C49A00;
+        scale: 1.04;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+        main {
+            width: 85%;
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+{% include 'components/nav.html' %}
+
+<main>
+
+
+    <form method="post" class="principal_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Escolhe aí</h2>
+        <h1>Editar Filme Filme</h1>
+        <p class="sub_title">Coloque as informações necessárias</p>
+        <div class="inputDiv">
+            {{movieForm.name.label_tag}}
+            {{movieForm.name}}
+        </div>
+
+        <div class="inputDiv">
+            {{movieForm.category.label_tag}}
+            {{movieForm.category}}
+        </div>
+
+        <div class="inputDiv">
+            <label id="label_img" for="id_img">
+                <img src="{% static 'imgs/upload.svg' %}" alt="">
+                <p>Selecione a imagem de cartaz</p>
+            </label>
+            {{movieForm.img}}
+        </div>
+
+        <style>
+            #preview {
+                width: 75px;
+            }
+        </style>
+        
+
+        <section>
+            <div id="preview-container">
+                <img id="preview" src="{{movie.img.url}}" alt="">
+            </div>
+        </section>
+
+        <div class="inputDiv">
+            {{movieForm.sinopse.label_tag}}
+            {{movieForm.sinopse}}
+        </div>
+
+        <div class="inputDiv">
+            {{movieForm.url.label_tag}}
+            {{movieForm.url}}
+        </div>
+
+        <div class="inputDiv sagaDiv">
+            {{movieForm.fk_saga.label_tag}}
+            {{movieForm.fk_saga}}
+            <p>Não encontrou a saga? <span class="button_saga" onclick="openDropSDown()">Cadastre agora</span></p>
+        </div>
+
+        <button type="submit">
+            Cadastrar Filme
+        </button>
+    </form>
+
+    <form method="post" class="none sagaForm" id="sagaForm" onsubmit="return registerSaga()">
+        {% csrf_token %}
+        <div class="inputDiv">
+            {{sagaForm.name.label_tag}}
+            {{sagaForm.name}}
+        </div>
+
+        <button type="submit">
+            Cadastrar
+        </button>
+    </form>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#id_category').select2();
+    })
+</script>
+
+<script>
+    document.querySelector('.sagaForm button[type="submit"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita o envio padrão do botão de submissão
+
+        const sagaForm = document.querySelector('.sagaForm'); // Captura o formulário
+        const sagaNameInput = sagaForm.querySelector('#id_name'); // Captura o campo de nome
+        const sagaName = sagaNameInput.value.trim(); // Obtém o valor do campo de nome
+
+        if (!sagaName) {
+            alert('O nome da saga é obrigatório.');
+            return;
+        }
+
+        const formData = new FormData(); // Cria um FormData para os dados da requisição
+        formData.append('name', sagaName); // Adiciona o campo de nome
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; // Captura o token CSRF
+
+        fetch('/registerSagaAPI/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken // Inclui o token CSRF nos cabeçalhos
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.id && data.name) {
+                // Adiciona a nova saga ao select
+                const sagaSelect = document.getElementById('id_fk_saga');
+                const newOption = document.createElement('option');
+                newOption.value = data.id;
+                newOption.text = data.name;
+                sagaSelect.appendChild(newOption);
+
+                // Seleciona automaticamente a nova saga
+                sagaSelect.value = data.id;
+
+                // Limpa e oculta o formulário
+                sagaNameInput.value = '';
+                sagaForm.classList.add('none');
+                alert('Saga cadastrada com sucesso!');
+            } else if (data.errors) {
+                alert('Erro ao cadastrar saga: ' + JSON.stringify(data.errors));
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao cadastrar saga:', error);
+            alert('Erro ao cadastrar saga.');
+        });
+    });
+</script>
+
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('preview-container');
+
+        if (preview) {
+            preview.remove();
+        }
+
+        previewContainer.classList.add('loading');
+
+        const imgElement = document.createElement('img');
+
+
+
+        // previewContainer.appendChild(imgElement);
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Adiciona um atraso artificial (simula o carregamento por 1 segundo)
+                setTimeout(function () {
+                    // Remove a classe de carregamento depois do atraso
+                    previewContainer.classList.remove('loading');
+
+                    // Exibe o preview da imagem
+                    imgElement.src = e.target.result;
+                    imgElement.alt = 'Descrição da imagem';
+                    imgElement.className = 'sua-classe';
+                    imgElement.id = 'preview'
+
+                    // preview.style.display = 'block';
+                }, 1000); // Atraso de 1 segundo (1000ms)
+                previewContainer.appendChild(imgElement);
+            };
+
+            reader.readAsDataURL(input.files[0]); // Lê o arquivo
+        } else {
+            // Oculta o preview e remove o spinner
+            preview.src = "#";
+            preview.style.display = 'none';
+            previewContainer.classList.remove('loading');
+        }
+    }
+
+</script>
+
+<script>
+    function openDropSDown() {
+        var sagaForm = document.querySelector('.sagaForm')
+
+        sagaForm.classList.remove('none')
+        sagaForm.classList.add('sagaForm')
+    }
+</script>
+{% endblock %}

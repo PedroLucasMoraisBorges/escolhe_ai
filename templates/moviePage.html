@@ -1,0 +1,186 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{movie.name}}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/moviePage.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'components/nav.html' %} 
+
+    <main>
+        <section class="info">
+            <img class="cartaz" src="{{movie.img.url}}" alt="">
+
+            <article class="details">
+                <div>
+                    <div>
+                        <div class="stars">
+                            <p class="rate">
+                                <img src="{% static 'imgs/star_yellow.svg' %}" alt="">
+                                <p>{{averageReview}}</p>
+                            </p>
+                        </div>
+                        <h1>{{movie.name}}</h1> 
+                    </div>
+                    
+                    <p class="sinopse">{{movie.sinopse}}</p>
+                </div>
+
+                <div class="genders">
+                    {% for gender in movie.category.all %}
+                        <p class="gender">{{gender.name}}</p>
+                    {% endfor %}
+                </div>
+
+            </article>
+        </section>
+
+        <section class="moreInfo">
+            <article>
+                <p class="title">Última Sessão</p>
+                {% if lastSession %}
+                    {{lastSession.formated_dt_session}}
+                {% else %}
+                    <p class="session">Filme ainda não assistido</p>
+                {% endif %}
+            </article>
+
+            <article>
+                <p class="title">URL</p>
+                <a href="{{movie.url}}" target="_blank">{{movie.url}}</a>
+            </article>
+
+            <article >
+                <p class="title">Gêneros</p>
+                <div class="genders">
+                    {% for gender in movie.category.all %}
+                        <p class="gender">{{gender.name}}</p>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+
+
+        <section class="buttons">
+            <a href="{% url 'edit_movie' id=movie.id %}" class="edit">Editar</a>
+            <button class="btn closeModal" id="markAsWatched">Marcar como Assistido</button>
+        </section>
+
+
+        <section class="comments">
+            <article class="commentSearch">
+                <form method="post" class="formSearch">
+                    {% csrf_token %}
+                    <img src="{% static 'imgs/search.svg' %}" alt="lupa">
+                    <input type="text" placeholder="Search">
+                </form>
+
+                <button class="addNewComment btn" onclick="openModal()">Avaliar</button>
+            </article>
+
+            <article class="listComments">
+                {% for comment in comments %}
+                    <div class="commentCard">
+                        <p class="dt_review">{{comment.review.formated_dt_review}}</p>
+
+                        <div class="infoUser">
+                            <p class="name">{{comment.review.fk_user}}</p>
+
+                            <div class="rate">
+                                <img src="{% static 'imgs/star_yellow.svg' %}" alt="">
+                                <p>{{comment.review.rate}}</p>
+                            </div>
+                        </div>
+
+                        <p>{{comment.comment.text}}</p>
+                    </div>
+                {% endfor %}
+            </article>
+        </section>
+
+        <div class="none back">
+            <form method="post" class="none commentForm modal">
+                {% csrf_token %}
+                <h1>Avalie o filme</h1>
+                <p class="name">{{movie.name}}</p>
+
+                <div class="inputDiv">
+                    {{reviewForm.rate.label_tag}}
+                    {{reviewForm.rate}}
+                </div>
+
+                <div class="inputDiv">
+                    {{commentForm.text.label_tag}}
+                    {{commentForm.text}}
+                </div>
+
+                <div class="buttons">
+                    <button class="btn" type="submit">
+                        Avaliar
+                    </button>
+
+                    <button type="button" class="btn closeModal" onclick="closeModal()">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        function openModal(){
+            var modal = document.querySelector('.modal')
+            var back = modal.parentElement
+
+            back.classList.remove('none')
+            modal.classList.remove('none')
+        }
+
+        function closeModal() {
+            var modal = document.querySelector('.modal')
+            var back = modal.parentElement
+
+            modal.classList.add('slideUp');
+
+            setTimeout(() => {
+                back.classList.add('none');
+                modal.classList.add('none');
+                modal.classList.remove('slideUp');
+            }, 500);
+        }
+    </script>
+
+    <script>
+        document.querySelector('#markAsWatched').addEventListener('click', function(event) {
+            event.preventDefault(); // Evita o envio padrão do botão de submissão
+
+            fetch('/marcarComoAssistido/{{movie.id}}', {
+                method: 'get',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.session && data.name) {
+                    alert('Sessão salva com sucesso!');
+                    document.querySelector('.session').textContent = data.session
+                } else if (data.errors) {
+                    alert('Erro ao salvar a sessão: ' + data.errors);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao salvar a sessão:', error);
+                alert('Erro ao salvar a sessão');
+            });
+        });
+    </script>
+{% endblock %}

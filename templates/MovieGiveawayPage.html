@@ -1,0 +1,105 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}
+    Filmes
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/movieGiveaway.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'components/nav.html' %}
+
+    <main>
+        <h2>Escolhe aí</h2>
+        <h1>Sortear Filme</h1>
+        <p class="sub_title">Escolha filtros especídificos ou sorteie qualquer um</p>
+
+
+        <form method="post" class="filters">
+            {% csrf_token %}
+            <h3>Filtros</h3>
+
+            <section class="fields">
+                <div class="divSelect">
+                    <label for="id_is_whatched">
+                        Já assistido?
+                    </label>
+                    {{form.is_whatched}}
+                </div>
+
+                <div class="divSelect">
+                    <label for="id_gender">
+                        Gênero
+                    </label>
+                    {{form.gender}}
+                </div>
+
+                <div class="divSelect">
+                    <label for="id_rating">
+                        Nota mínima
+                    </label>
+                    {{form.rating}}
+                </div>
+
+                <button type="submit">
+                    Sortear
+                </button>
+            </section>
+        </form>
+
+        <section class="sortedMovie" id="sortedMovie">
+            {% if movie %}
+                <div id="animationSteps">
+                    <p id="stepMessage"></p>
+                </div>
+                <div id="movieReveal" style="display: none;">
+                    {% include 'components/card.html' %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const messages = [
+            "Estamos preparando o seu filme...",
+            "Que interessante, hoje será de: {{ categories }}",
+            "E o filme sorteado é..."
+        ];
+        const stepMessage = document.getElementById('stepMessage');
+        const movieReveal = document.getElementById('movieReveal');
+        let currentStep = 0;
+
+        function showNextStep() {
+            if (currentStep < messages.length) {
+                stepMessage.textContent = messages[currentStep];
+                currentStep++;
+                setTimeout(showNextStep, 3000)
+            } else {
+                stepMessage.style.display = 'none';
+                movieReveal.style.display = 'flex'; 
+            }
+        }
+
+        if (stepMessage) {
+            showNextStep(); // Inicia a animação
+        }
+
+        const sortedMovie = document.getElementById('sortedMovie');
+        sortedMovie.scrollIntoView({
+            behavior: 'smooth', // Rolagem suave
+            block: 'center',   // Centraliza a div na tela
+        });
+
+        console.log(sortedMovie)
+    });
+</script>
+{% endblock %}

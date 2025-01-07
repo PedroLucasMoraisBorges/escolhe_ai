@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            font-family: "Roboto", serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        form {
+            background-color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+            width: 400px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header h1 {
+            background-color: rgb(245, 197, 24);
+            padding: .4rem;
+            border-radius: 10px;
+            font-weight: bolder;
+            font-family: "Bungee", sans-serif;
+            font-weight: 500;
+            margin-bottom: .6rem;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .divInput {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+        
+        .divInput input {
+            padding: .4rem;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 2rem;
+            padding: .5rem 1.1rem;
+            background-color: #2b61ce;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 5px;
+            border: 0;
+        }
+
+        p {
+            text-align: center;
+            display: block;
+            text-align: center;
+            margin-top: .8rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    {% include 'components/errors.html' %}
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="header">
+            <h1>Escolhe Aí</h1>
+            <h2>Login</h2>
+        </div>
+        
+        {% for field in form %}
+            <div class="divInput">
+                {{field.label_tag}}
+                {{field}}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Login</button>
+
+        <p>Ainda não tem cadastro? <span><a href="{% url 'register' %}">Cadastrar-se</a></span></p>
+    </form>
+</body>
+</html>

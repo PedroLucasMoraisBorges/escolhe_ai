@@ -1,0 +1,84 @@
+{% load static %}
+
+<style>
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .menu img {
+        margin-right: 0.5rem;
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 60px; 
+        left: 10px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        z-index: 10;
+    }
+
+    .dropdown li {
+        padding: 0.5rem 1rem;
+        text-align: left;
+    }
+
+    .dropdown li a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+    }
+
+    .dropdown li a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .none {
+        display: none !important;
+    }
+</style>
+
+
+<nav>
+    <div class="menu" onclick="toggleDropdown()">
+        <img src="{% static 'imgs/menu.svg' %}" alt="menu">
+        <a class="title">ESCOLHE AÍ</a>
+    </div>
+
+    <ul class="dropdown none">
+        <li><a href="{% url 'movies' %}">Filmes</a></li>
+        <li><a href="{% url 'register_movie' %}">Cadastrar Filmes</a></li>
+        <li><a href="{% url 'movie_giveaway' %}">Sortear</a></li>
+        <li><a href="{% url 'logout' %}">Sair</a></li>
+    </ul>
+    
+    <form action="post">
+        <input type="text" placeholder="Pesquisar no escolhe aí">
+        <button type="submit">
+            <img src="{% static 'imgs/search.svg' %}" alt="lupa">
+        </button>
+    </form>
+
+    <a class="title" href="{% url 'register_movie' %}">Cadastrar filmes</a>
+</nav>
+
+<script>
+    function toggleDropdown() {
+        var dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('none');
+    }
+</script>

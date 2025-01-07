@@ -1,0 +1,161 @@
+{% load static %}
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        border-radius: 0px 15px 15px 15px;
+        box-shadow: 2px 2px 4px #0000004d;
+        margin-bottom: 1rem;
+        color: #434E5F;
+    }
+
+    .card img {
+        width: 100%;
+        border-radius: 0px 15px 0 0;
+    }
+
+    .info {
+        width: 100%;
+        padding-bottom: .8rem;
+    }
+
+    .rate {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .2rem;
+    }
+
+    .rate p {
+        font-size: 18px;
+    }
+
+    .number_rate {
+        display: flex;
+        padding: .3rem;
+    }
+
+    .rate button {
+        display: flex;
+        color: #0E63BE;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        transition: .3s;
+        border-radius: 10px;
+        padding: .3rem;
+    }
+
+    .rate button:hover img, .rate button:hover p {
+        filter: brightness(0) saturate(100%);
+        color: black;
+    }
+
+    .rate button:hover {
+        background-color: rgba(128, 128, 128, 0.203);
+    }
+
+    .rate img {
+        width: 18px;
+        border-radius: 0px;
+    }
+
+    .name {
+        padding: 0rem .5rem 0rem .5rem;
+        font-size: 1.15rem;
+        font-weight: 600;
+        height: 75px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        padding: .5rem;
+    }
+
+    .buttons a {
+        border-radius: 20px;
+        margin-top: 1.1rem;
+        padding: .8rem 3rem;
+        text-align: center;
+        width: 100%;
+        text-decoration: none;
+        color: #0E63BE;
+        font-weight: bold;
+        background-color: #00000014;
+        transition: .3s;
+    }
+
+    .buttons a:hover {
+        background-color: #00000022;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+        .card {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.150);
+            border-radius: 15px;
+        }
+
+        .card .cartaz {
+            width: 15%;
+            border-radius: 10px;
+            box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .info {
+            padding: 1rem;
+        }
+
+        .rate, .number_rate {
+            padding: 0;
+        }
+
+        .info .name {
+            padding: 0;
+        }
+
+        .buttons, .buttons a {
+            margin: 0;
+            padding: 0;
+        }
+
+        .buttons a {
+            padding: .5rem;
+            border-radius: 10px;
+        }
+    }
+</style>
+
+<article class="card">
+    <img class="cartaz" src="{{movie.img.url}}" alt="{{movie.name}}_img">
+
+    <div class="info">
+        <div class="rate">
+            <div class="number_rate">
+                <img src="{% static 'imgs/star_yellow.svg' %}" alt="star_yellow">
+                <p class="count_ratings">(2)</p>
+            </div>
+            
+            <button>
+                <img src="{% static 'imgs/star_blue.svg' %}" alt="star_blue">
+                <p>Avaliar</p>
+            </button>
+        </div>
+
+        <div>
+            <p class="name">{{ movie.name }}</p>
+        </div>
+        
+
+        <div class="buttons">
+            <a href="{% url 'movie_page' id=movie.id  %}" class="details">Detalhes</a>
+        </div>
+    </div>
+</article>

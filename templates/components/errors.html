@@ -1,0 +1,89 @@
+<style>
+        
+    /* error */
+    @keyframes surgir {
+        from{
+            left: -50%;
+        }
+
+        to{
+            left: 0%;
+        }
+    }
+
+    @keyframes voltar {
+        from{
+            left:0%
+        }
+        to{
+            left: -50%
+        }
+    }
+
+    .alert{
+        z-index: 1;
+        top: 10%;
+        padding: .4rem .3rem .3rem .5rem;
+        left: 0%;
+        position: absolute !important;
+        width: 25%;
+        animation: surgir 1s;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        background-color: #fa7f72;
+        border-radius: 0px 10px 10px 0px;
+        font-size: 1.1rem;
+    }
+
+    .alert p {
+        margin-bottom: .3rem;
+        text-align: start ;
+        margin-top: 0;
+    }
+
+    .alert button{
+        background-color: transparent;
+        border: 0;
+        align-self: flex-start;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: black;
+    }
+
+    .sumir{
+        animation: voltar 1s;
+        transition: 1s;
+        opacity: 0;
+    }
+
+    .input-container .campError::placeholder{
+        font-weight: bold;
+        color: #1a3962;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+        .alert{
+            width: 40%;
+        }
+    }
+
+    /* error */
+</style>
+
+{% if errors %}
+  <div class="alert alert-danger alert-dismissible">
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+    var alert = document.querySelector(".alert");
+
+    setTimeout(() => {
+        alert.classList.add("sumir");
+    }, 5000);
+</script>

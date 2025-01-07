@@ -1,0 +1,298 @@
+/* HEADER INFO */
+
+.info {
+    display: flex;
+}
+
+.cartaz {
+    width: 12.5%;
+}
+
+.details {
+    padding-left: 2rem;
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: .5rem;
+}
+
+.stars img {
+    width: 24px;
+}
+
+.stars p {
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.info h1 {
+    margin-bottom: .3rem;
+}
+
+.sinopse {
+    color: #434E5F;
+    margin-bottom: .5rem;
+}
+
+.genders {
+    display: flex;
+}
+
+.gender {
+    margin-right: 1rem;
+    padding: .3rem 1rem;
+    background-color: #2b61ce4f;
+    border-radius: 5px;
+    color: black !important;
+}
+
+/* HEADER INFO */
+
+
+
+/* BODY INFO */
+
+.moreInfo {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: 30% 30% 30%;
+    color: #434E5F;
+}
+
+.moreInfo .title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.moreInfo a {
+    color: #152237;
+}
+
+.buttons {
+    margin-top: 1.5rem;
+}
+.edit, .btn {
+    padding: .5rem 1.1rem;
+    background-color: #2b61ce;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+}
+
+/* BODY INFO */
+
+
+
+/* FORM SEARCH COMMENTS */
+
+.commentSearch {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: .5rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
+.formSearch  {
+    display: flex;
+    width: 90%;
+    background-color: #5a667733;
+    border-radius: 5px;
+    padding: .2rem .5rem;
+}
+
+.formSearch img {
+    width: 25px;
+    filter: brightness(0.3);
+}
+
+.formSearch input {
+    border: 0;
+    padding: .5rem .8rem;
+    width: 100%;
+    background-color: #5a667700;
+    color: rgb(32, 32, 32);
+    font-weight: 600;
+}
+
+.formSearch input:focus {
+    outline: 0;
+}
+
+.formSearch input::placeholder {
+    color: rgb(32, 32, 32);
+    font-weight: 600;
+}
+
+.addNewComment {
+    border: 0;
+    cursor: pointer;
+}
+
+/* FORM SEARCH COMMENTS */
+
+
+
+
+/* COMMENT CARD */
+
+
+.commentCard {
+    margin-top: .6rem;
+    display: flex;
+    flex-direction: column;
+    padding: .8rem;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.250);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: #434E5F;
+}
+
+.dt_review {
+    margin-bottom: .7rem;
+}
+
+.infoUser {
+    display: flex;
+    margin-bottom: .7rem;
+}
+
+.infoUser .name {
+    font-weight: 600;
+}
+
+.commentCard .rate {
+    display: flex;
+    margin-left: 1.5rem;
+}
+
+.commentCard img {
+    width: 20px;
+}
+
+
+/* COMMENT CARD */
+
+
+
+/* COMMENT FORM */
+
+.none {
+    display: none;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.back {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.450);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.none {
+    display: none !important;
+}
+
+.commentForm {
+    background-color: white;
+    color: #434E5F;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    animation: slideDown 0.5s ease;
+}
+
+.slideUp {
+    animation: slideUp 0.5s ease;
+}
+
+.commentForm .name {
+    margin-bottom: 1rem;
+}
+
+.inputDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.inputDiv input, select, textarea {
+    width: 100%;
+    resize: none;
+    margin-bottom: .8rem;
+    padding: .5rem;
+    border-radius: 10px;
+}
+
+.commentForm .buttons {
+    display: grid;
+    grid-template-columns: 47.5% 47.5%;
+    justify-content: space-between;
+}
+
+.closeModal {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+/* COMMENT FORM */
+
+
+
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .cartaz {
+        width: 50%;
+    }
+
+    .moreInfo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .moreInfo article {
+        margin-bottom: .8rem;
+    }
+
+    .formSearch  {
+        width: 80%;
+    }
+}

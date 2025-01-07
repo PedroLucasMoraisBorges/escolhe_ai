@@ -1,0 +1,13 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+data
+venv
+db.sqlite3
+media/curriculosPDF/*
+media/profilePicture/*
+.vscode
+
+fixtures/
