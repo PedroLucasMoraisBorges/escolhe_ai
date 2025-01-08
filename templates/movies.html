@@ -17,7 +17,74 @@
         <h1>Todos os filmes cadastrados</h1>
         <p class="sub_title">Listados Aleatoriamente</p>
 
+        <style>
+            .formSearch  {
+                display: flex;
+                width: 90%;
+                background-color: #5a667733;
+                border-radius: 5px;
+                padding: .2rem;
+                margin-bottom: 2rem;
+            }
+
+            .formSearch .lupa {
+                background-color: transparent;
+                border: 0;
+            }
+
+            .formSearch img {
+                width: 25px;
+                filter: brightness(0.3);
+            }
+
+            .formSearch input {
+                border: 0;
+                padding: .5rem .8rem;
+                width: 100%;
+                background-color: #5a667700;
+                color: rgb(32, 32, 32);
+                font-weight: 600;
+            }
+
+            .formSearch input:focus {
+                outline: 0;
+            }
+
+            .formSearch input::placeholder {
+                color: rgb(32, 32, 32);
+                font-weight: 600;
+            }
+
+            .addNewComment {
+                border: 0;
+                cursor: pointer;
+            }
+
+            .btn {
+                padding: .5rem 1.1rem;
+                background-color: #2b61ce;
+                text-decoration: none;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: white;
+                border-radius: 5px;
+                border: 0;
+                cursor: pointer;
+            }
+
+        </style>
+
         <section>
+            <form method="get" class="formSearch">
+                <button class="lupa" type="submit">
+                    <img src="{% static 'imgs/search.svg' %}" alt="lupa">
+                </button>
+                
+                <input name="search" type="text" placeholder="Search">
+
+                <button type="submit" class="btn">Pesquisar</button>
+            </form>
+
             <div class="listMovies">
                 {% for movie in movies %}
                     {% include 'components/card.html' %}

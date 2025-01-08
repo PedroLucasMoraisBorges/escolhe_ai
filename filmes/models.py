@@ -59,6 +59,7 @@ class Saga(models.Model):
         return self.name
 
 from django.utils.translation import gettext_lazy as _
+from unidecode import unidecode
 
 class Movie(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -66,12 +67,17 @@ class Movie(models.Model):
     name = models.CharField(max_length=244, unique=True, error_messages={
         'unique': _("Filme com este nome já existe.")
     })
+    normalized_name = models.CharField(max_length=255, editable=True, default='', null=True)
     category = models.ManyToManyField(Category, related_name='movie_category')
     url = models.CharField(max_length=244, null=True)
     sinopse = models.CharField(max_length=488, null=True)
     img = models.FileField(upload_to='movieImgs/')
     watched = models.BooleanField(default=False)
     fk_saga = models.ForeignKey(Saga, related_name='saga_movie', null=True, blank=True, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.normalized_name = unidecode(self.name).lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

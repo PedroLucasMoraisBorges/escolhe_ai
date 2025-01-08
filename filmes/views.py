@@ -12,6 +12,8 @@ from .forms import *
 import random
 from django.utils import timezone
 
+from unidecode import unidecode
+
 def getErrors(Forms):
     errors = []
     for form in Forms:
@@ -25,15 +27,24 @@ class HomePage(View):
     def get(self, request):
         return render(request, 'homePage.html')
     
+from django.db.models.functions import Lower
+
 class Movies(View):
     def get(self, request):
+        search = request.GET.get('search')
+
         movies = Movie.objects.filter()
 
+        if search:
+            normalized_search = unidecode(search).lower()
+            movies = Movie.objects.filter(normalized_name__icontains=normalized_search)
+        
         context = {
             'movies' : movies
         }
-        
+
         return render(request, 'movies.html', context)
+        
 
 class RegisterMovie(View):
     def get(self, request):

@@ -66,8 +66,8 @@
         <li><a href="{% url 'logout' %}">Sair</a></li>
     </ul>
     
-    <form action="post">
-        <input type="text" placeholder="Pesquisar no escolhe aí">
+    <form action="{% url 'movies' %}" method="get">
+        <input type="text" name="search" placeholder="Pesquisar no escolhe aí">
         <button type="submit">
             <img src="{% static 'imgs/search.svg' %}" alt="lupa">
         </button>
